@@ -36,47 +36,33 @@ class JobScraper:
         print("Scraper initialized in full browser mode")
         self.session = SessionLocal()
 
-    def close_ad(self):
-        try:
-            # Wait for the ad to be visible (adjust the selector to match the ad's close button)
-            close_button = WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable((By.ID, "interactive-close-button"))
-            )
-            close_button.click()
-            print("Ad closed successfully.")
-        except TimeoutException:
-            print("No ad close button found, skipping.")
-
-
     def scrape_job_page(self, url):
         """Scrape job details from the page at the given URL."""
         self.driver.get(url)
         details = defaultdict(str)
 
         try:
+            # Debugging: output the page source
+            print("Current page source:")
+            print(self.driver.page_source)
 
-            self.close_ad()
-
-            # Wait for job description to be present
-            details["job_description"] = self.wait_for_element(By.CLASS_NAME, "job-description-text", 10) or "No description available"
-
-            # Wait for job title to be present
+            # Scrape each element as soon as it is available
             details["job_title"] = self.wait_for_element(By.CLASS_NAME, 'job-name', 10) or "No title available"
+            print(f"Job title found: {details['job_title']}")
 
-            # Wait for company name to be present
+            details["job_description"] = self.wait_for_element(By.CLASS_NAME, "job-description-text", 10) or "No description available"
+            print(f"Job description found: {details['job_description']}")
+
             details["company_name"] = self.wait_for_element(By.CLASS_NAME, 'job-company-name', 10) or "No company name available"
+            print(f"Company name found: {details['company_name']}")
 
-            # Wait for job location to be present
             details["job_location"] = self.wait_for_element(By.CLASS_NAME, 'job-view__location-name', 10) or "No location available"
+            print(f"Job location found: {details['job_location']}")
 
         except Exception as e:
-            print("page source is...")
-            print(self.driver.page_source)
-            print(f"Error scraping {url}: {e}")
+            print("Error scraping the job page:", e)
 
         return details
-
-
 
     def wait_for_element(self, by, value, timeout=10):
         """Helper function to wait for an element to be present and return its text."""

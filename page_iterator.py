@@ -19,16 +19,19 @@ try:
     )
     print("Got links")
 
-    job_links = scraper.driver.find_elements(By.CSS_SELECTOR, 'a.job-search-list-item-desktop__job-name')
+    # Store all job links initially to avoid re-fetching
+    job_links = [job.get_attribute('href') for job in scraper.driver.find_elements(By.CSS_SELECTOR, 'a.job-search-list-item-desktop__job-name')]
 
-    for index, job_link in enumerate(job_links):
-        job_url = job_link.get_attribute('href')
+    # Remove duplicate links, if any
+    job_links = list(set(job_links))
+
+    for job_url in job_links:
         print(f"Considering job_url {job_url}")
 
         if not scraper.job_exists(job_url):
             try:
-                job_links[index].click()
-
+                # Visit the job page directly
+                scraper.driver.get(job_url)
                 details = scraper.scrape_job_page(job_url)
 
                 scraper.save_job_to_db(job_url, details)
@@ -36,14 +39,8 @@ try:
             except Exception as e:
                 print(f"Error processing job {job_url}: {e}")
 
-
-            scraper.driver.back()
-            time.sleep(3)  # Wait for the page to reload
-
-            WebDriverWait(scraper.driver, 10).until(
-                EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'a.job-search-list-item-desktop__job-name'))
-            )
-            job_links = scraper.driver.find_elements(By.CSS_SELECTOR, 'a.job-search-list-item-desktop__job-name')
+            # Small delay to avoid overloading the site
+            time.sleep(2)
 
 except KeyboardInterrupt:
     print("Scraping interrupted by user.")
