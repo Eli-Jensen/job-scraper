@@ -53,7 +53,7 @@ class JobScraper:
             details["job_description"] = self.wait_for_element(By.CLASS_NAME, "job-description-text", 10) or "No description available"
             print(f"Job description found: {details['job_description']}")
 
-            details["company_name"] = self.wait_for_element(By.CLASS_NAME, 'job-company-name', 10) or "No company name available"
+            details["company_name"] = self.wait_for_element(By.CLASS_NAME, 'job-location', 10) or "No company name available"
             print(f"Company name found: {details['company_name']}")
 
             details["job_location"] = self.wait_for_element(By.CLASS_NAME, 'job-view__location-name', 10) or "No location available"
