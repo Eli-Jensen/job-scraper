@@ -42,16 +42,12 @@ class JobScraper:
         details = defaultdict(str)
 
         try:
-            # Debugging: output the page source
-            print("Current page source:")
-            print(self.driver.page_source)
-
             # Scrape each element as soon as it is available
             details["job_title"] = self.wait_for_element(By.CLASS_NAME, 'job-name', 10) or "No title available"
             print(f"Job title found: {details['job_title']}")
 
             details["job_description"] = self.wait_for_element(By.CLASS_NAME, "job-description-text", 10) or "No description available"
-            print(f"Job description found: {details['job_description']}")
+            print(f"Job description found: {details['job_description'][0:100]}")
 
             details["company_name"] = self.wait_for_element(By.CLASS_NAME, 'job-location', 10) or "No company name available"
             print(f"Company name found: {details['company_name']}")
