@@ -18,8 +18,7 @@ In summary, if you're looking to find a job on ClearanceJobs, having experience 
 
 ![Unigrams](./unigrams.png)
 
-2,652 scraped jobs <br>
-Top 150 Tokens (Token - Percentage of Job Postings Token is Mentioned):
+### Top Tokens (Percentage of Job Postings where Token is Mentioned) out of 2,652 scraped jobs:
 
 python - 37.78%<br>
 java - 36.69%<br>
@@ -139,7 +138,6 @@ iac - 1.96%<br>
 dynamodb - 1.96%<br>
 cli - 1.92%<br>
 dns - 1.89%<br>
-evolve - 1.81%<br>
 chef - 1.81%<br>
 grafana - 1.81%<br>
 selenium - 1.81%<br>
@@ -159,15 +157,4 @@ helm - 1.55%<br>
 node - 1.51%<br>
 sysml - 1.51%<br>
 avoid - 1.51%<br>
-partnerships - 1.51%<br>
 ghidra - 1.51%<br>
-vaccinations - 1.51%<br>
-boosters - 1.51%<br>
-stability - 1.47%<br>
-contacted - 1.47%<br>
-procedure - 1.47%<br>
-eliminate - 1.47%<br>
-packaging - 1.47%<br>
-friday - 1.47%<br>
-refinement - 1.47%<br>
-participation - 1.47%<br>
